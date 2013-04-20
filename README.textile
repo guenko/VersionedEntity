@@ -2,8 +2,7 @@ h1. Versioned Entity
 
 h2. Intention
 
-This is an implementation of persistent entities providing versioning features. 
-It is a Java implementation based on JPA entities.
+This is an implementation of persistent entities providing versioning features. It is a Java implementation based on JPA entities.
 
 You may use this approach if you   
 
@@ -37,9 +36,7 @@ public class VersionedUser extends VersionedEntity {
   private String username;
   ...
 
-Your particular DAO has to derive from VersionedDao<YourEntityClass> and hands over the entity manager at construction 
-time or later by means of the init() method. You may also implement particular retrieval methods (e.g. findByUsername) 
-using base class helper methods:
+Your particular DAO has to derive from VersionedDao<YourEntityClass> and hands over the entity manager at construction time or later by means of the @init()@ method. You may also implement particular retrieval methods (e.g. findByUsername) using base class helper methods:
 
 bc. public class VersionedUserDao extends VersionedDao<VersionedUser> {
   public VersionedUserDao() {
@@ -110,37 +107,27 @@ It is only allowed to have one pending future time event per entity.
 
 h2. Implementation and Example
 
-The maven based Eclipse parent project holds the sub project @versent-base@ implementing the provided versioning 
-feature by means of a jar library. It holds the entity base classes, the DAO base classes and interfaces. 
-All other sub projects are just there for performing unit tests. They also show more sophisticated usage examples.
+The maven based Eclipse parent project holds the sub project @versent-base@ implementing the provided versioning feature by means of a jar library. It holds the entity base classes, the DAO base classes and interfaces. All other sub projects are just there for performing unit tests. They also show more sophisticated usage examples.
  
-The parent project compiles to a Java Enterprise Application running and tested on JBOSS 6 and MySQL database. 
-After appropriate configuration changes the code should also run on other application servers and databases.
+The parent project compiles to a Java Enterprise Application running and tested on JBOSS 6 and MySQL database. After appropriate configuration changes the code should also run on other application servers and databases.
 
 h2. Special Considerations and Caveats
 
 h3. Uniqueness constraints
 
-As versioned entities holds not only the latest valid data record in the database but also the full history, 
-you have to remove any uniqueness constraint from your particular entities. 
-This means the uniqueness constraint is not checked by the database any longer. 
-You should verify the constraint in your application code by yourself.
+As versioned entities holds not only the latest valid data record in the database but also the full history, you have to remove any uniqueness constraint from your particular entities. This means the uniqueness constraint is not checked by the database any longer. You should verify the constraint in your application code by yourself.
 
 h3. Associations
 
-Associations with an versioned entity are currently not supported. 
-This may be supported in one of the next updates to this project.
+Associations with an versioned entity are currently not supported. This may be supported in one of the next updates to this project.
 
 h3. MySQL time precision
 
-MySQL up to version 5.5 does not support Millisecond values on a DATETIME Column. 
-This has some implications to the implementation, e.g. it is not possible to perform more 
-than one updates to a particular entity within the time frame of 1 second.
+MySQL up to version 5.5 does not support Millisecond values on a DATETIME Column. This has some implications to the implementation, e.g. it is not possible to perform more than one updates to a particular entity within the time frame of 1 second.
 
 h3. Deployment
 
-In case of using MySQL database do not forget to copy the mysql-connector-java jar-file to 
-the respective lib directory of your application server.                                                                    
+In case of using MySQL database do not forget to copy the mysql-connector-java jar-file to the respective lib directory of your application server.                                                                    
 
 h2. Feedback
 
